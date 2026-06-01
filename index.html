@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🐰 Liz & Charli – Konijnenwereld</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
+
+    :root {
+      --roze: #ff4da6;
+      --roze-licht: #ffb3d9;
+      --geel: #ffe600;
+      --geel-licht: #fff8b0;
+      --donker: #1a001a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--donker);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, #2d0030 0%, #1a001a 50%, #1a1a00 100%);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(255,77,166,.35) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 70%, rgba(255,230,0,.25) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    /* floating bunnies */
+    .bunny-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bunny-float {
+      position: absolute;
+      font-size: 2.5rem;
+      opacity: .12;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh) rotate(0deg); opacity: .12; }
+      100% { transform: translateY(-10vh)  rotate(360deg); opacity: 0; }
+    }
+
+    .hero-badge {
+      background: var(--geel);
+      color: var(--donker);
+      font-weight: 900;
+      font-size: .85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: .35rem 1.2rem;
+      border-radius: 99px;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 8vw, 7rem);
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(90deg, var(--roze), var(--geel));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      color: var(--roze-licht);
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+    }
+
+    .hero-emoji { font-size: 5rem; margin-bottom: 1rem; display: block; animation: bounce 2s ease-in-out infinite; }
+    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,.4);
+      font-size: .85rem;
+      animation: fadeInOut 2s ease-in-out infinite;
+    }
+    @keyframes fadeInOut { 0%,100% { opacity:.3; } 50% { opacity:1; } }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+    .section-title span { color: var(--geel); }
+
+    /* ── COUNTDOWN ── */
+    #countdown-section { text-align: center; }
+
+    #countdown-box {
+      display: inline-flex;
+      gap: 1.5rem;
+      background: rgba(255,77,166,.08);
+      border: 2px solid var(--roze);
+      border-radius: 20px;
+      padding: 1.5rem 2.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .cd-unit { text-align: center; }
+    .cd-num {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--geel);
+      display: block;
+      min-width: 3ch;
+    }
+    .cd-label { font-size: .75rem; color: var(--roze-licht); text-transform: uppercase; letter-spacing: 2px; }
+
+    /* ── WEETJES ── */
+    #weetjes-section {
+      background: rgba(255,77,166,.05);
+      border-radius: 30px;
+      border: 1px solid rgba(255,77,166,.2);
+      max-width: 1100px;
+    }
+
+    .weetjes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .weetje-card {
+      background: linear-gradient(135deg, rgba(255,77,166,.15), rgba(255,230,0,.08));
+      border: 1px solid rgba(255,230,0,.3);
+      border-radius: 20px;
+      padding: 1.8rem;
+      transition: transform .25s, box-shadow .25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .weetje-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(255,77,166,.3); }
+    .weetje-card::before {
+      content: '🐰';
+      position: absolute;
+      top: -10px; right: -10px;
+      font-size: 4rem;
+      opacity: .06;
+    }
+    .weetje-num {
+      font-size: .75rem;
+      font-weight: 700;
+      color: var(--geel);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: .6rem;
+    }
+    .weetje-card p { font-size: .95rem; color: rgba(255,255,255,.9); line-height: 1.6; }
+
+    /* ── VIDEOS ── */
+    #videos-section { text-align: center; max-width: 1100px; }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      text-align: left;
+    }
+
+    .video-card {
+      border-radius: 20px;
+      overflow: hidden;
+      background: #1a0018;
+      border: 2px solid rgba(255,77,166,.25);
+      transition: transform .25s, border-color .25s;
+    }
+    .video-card:hover { transform: translateY(-5px); border-color: var(--roze); }
+    .video-card iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: none;
+      display: block;
+    }
+    .video-card .video-info { padding: 1rem 1.2rem; }
+    .video-card .video-info h3 { font-size: .95rem; margin-bottom: .3rem; color: var(--geel); }
+    .video-card .video-info p  { font-size: .8rem; color: rgba(255,255,255,.5); }
+
+    /* ── LIZ & CHARLI ── */
+    #tribute-section { text-align: center; max-width: 900px; }
+
+    .tribute-box {
+      background: linear-gradient(135deg, var(--roze) 0%, #c200a0 50%, var(--geel) 100%);
+      border-radius: 30px;
+      padding: 3.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 80px rgba(255,77,166,.5);
+    }
+    .tribute-box::after {
+      content: '🐰💛🐰';
+      position: absolute;
+      bottom: -20px; right: -10px;
+      font-size: 6rem;
+      opacity: .1;
+    }
+    .tribute-box h2 {
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 900;
+      color: var(--donker);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      text-shadow: 2px 4px 0 rgba(255,255,255,.2);
+    }
+    .tribute-box p {
+      font-size: 1.15rem;
+      color: rgba(0,0,0,.75);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .stars {
+      font-size: 2rem;
+      margin: 1.5rem 0;
+      letter-spacing: .4rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      color: rgba(255,255,255,.3);
+      font-size: .8rem;
+      border-top: 1px solid rgba(255,77,166,.1);
+    }
+    footer span { color: var(--roze); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      text-align: center;
+      font-size: 2rem;
+      letter-spacing: 1rem;
+      opacity: .2;
+      padding: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="bunny-bg" id="bunnyBg"></div>
+
+    <span class="hero-emoji">🐰</span>
+    <div class="hero-badge">De #1 Konijnenwereld</div>
+    <h1>Liz & Charli<br>zijn de BESTE</h1>
+    <p class="hero-sub">De ultieme plek voor konijnenliefhebbers, grappige video's en dagelijkse weetjes 💛🩷</p>
+
+    <div class="scroll-hint">↓ scroll naar beneden ↓</div>
+  </div>
+
+  <!-- TRIBUTE -->
+  <section id="tribute-section">
+    <div class="tribute-box">
+      <h2>✨ Liz & Charli zijn de allerbeste! ✨</h2>
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <p>Jullie zijn net als konijnen: zacht, lief, en absoluut onweerstaanbaar. De wereld is beter met jullie erin! 🐰💛🩷</p>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section id="countdown-section">
+    <div class="section-title">⏱️ Nieuwe weetjes over <span>5 nieuwe weetjes</span> in…</div>
+    <div id="countdown-box">
+      <div class="cd-unit"><span class="cd-num" id="cd-h">00</span><span class="cd-label">uren</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-m">00</span><span class="cd-label">minuten</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-s">00</span><span class="cd-label">seconden</span></div>
+    </div>
+    <p style="color:rgba(255,255,255,.4); font-size:.85rem;">Elke 24 uur worden 5 nieuwe weetjes onthuld! 🐰</p>
+  </section>
+
+  <div class="divider">🐾 🐾 🐾</div>
+
+  <!-- WEETJES -->
+  <section id="weetjes-section">
+    <div class="section-title">🐰 Konijnen <span>Weetjes</span></div>
+    <div class="weetjes-grid" id="weetjesGrid"></div>
+  </section>
+
+  <div class="divider">🐾 🐾 🐾</div>
+
+  <!-- VIDEOS -->
+  <section id="videos-section">
+    <div class="section-title">🎬 Grappige <span>Konijnenfilmpjes</span></div>
+    <div class="videos-grid" id="videosGrid"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Gemaakt met <span>💛🩷</span> voor Liz & Charli — de grootste konijnenliefhebbers ter wereld 🐰</p>
+  </footer>
+
+  <script>
+    // ── AUTO-REFRESH ELKE AVOND OM 20:00 ──
+    function scheduleEveningRefresh() {
+      const now = new Date();
+      const refresh = new Date();
+      refresh.setHours(20, 0, 0, 0); // 20:00 uur
+      if (now >= refresh) refresh.setDate(refresh.getDate() + 1); // morgen
+      const msUntilRefresh = refresh - now;
+      setTimeout(() => {
+        location.reload();
+        scheduleEveningRefresh(); // plan volgende dag opnieuw
+      }, msUntilRefresh);
+    }
+    scheduleEveningRefresh();
+
+    // ── FLOATING BUNNIES ──
+    const bg = document.getElementById('bunnyBg');
+    const emojis = ['🐰','🐇','🥕','🌸','💛','🩷'];
+    for (let i = 0; i < 20; i++) {
+      const el = document.createElement('span');
+      el.classList.add('bunny-float');
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDuration = (8 + Math.random() * 14) + 's';
+      el.style.animationDelay = (Math.random() * 12) + 's';
+      el.style.fontSize = (1.5 + Math.random() * 3) + 'rem';
+      bg.appendChild(el);
+    }
+
+    // ── WEETJES DATA (3 groepen × 5 weetjes) ──
+    const alleWeetjes = [
+      // Groep 0
+      [
+        "Konijnen kunnen sprongen maken van meer dan een meter hoog en bijna drie meter ver — ze zijn kleine atletiekwonders!",
+        "Een konijn heeft een 360°-gezichtsveld en kan zelfs achter zich kijken zonder zijn hoofd te draaien.",
+        "Konijnen communiceren met elkaar door te stampen: een harde stamp betekent 'gevaar in de buurt!'",
+        "Gelukkige konijnen maken een 'binky': ze springen omhoog en draaien wild in de lucht. Pure vreugde!",
+        "Konijnen kunnen tot 70 kilometer per uur rennen — sneller dan veel auto's in de stad rijden!"
+      ],
+      // Groep 1
+      [
+        "Konijnen hebben 28 tanden die hun hele leven lang blijven groeien. Kauwen houdt ze op de juiste lengte.",
+        "Een konijn drinkt net zoveel water als een hond van hetzelfde gewicht — ze zijn echte waterslurpers.",
+        "Konijnen zijn crepusculair: het actiefst bij zonsopgang en zonsondergang, net als echte avontuurders.",
+        "Een groep konijnen heet een 'kolonie'. In het wild leven ze samen in een uitgebreid gangenstelsel.",
+        "Konijnen eten een deel van hun eigen keutels ('cecotropen') om extra voedingsstoffen op te nemen. Slim maar vies!"
+      ],
+      // Groep 2
+      [
+        "Konijnen slapen gemiddeld 8 uur per dag — maar dat doen ze met hun ogen half open. Altijd op wacht!",
+        "Het oor van een konijn kan tot 270 graden draaien om geluiden van alle kanten op te vangen.",
+        "Konijnen hebben een geheugen vergelijkbaar met honden: ze herkennen hun naam en hun baasjes.",
+        "Het hart van een konijn klopt 120 tot 150 keer per minuut — drie keer zo snel als dat van een mens.",
+        "Er zijn meer dan 50 erkende konijnenrassen, variërend van het minikonijn (1 kg) tot de Vlaamse Reus (9 kg)."
+      ]
+    ];
+
+    // Bepaal welke groep op basis van dag-index (elke 24 uur wisselt de groep)
+    function getDayGroup() {
+      const ms = Date.now();
+      const dagIndex = Math.floor(ms / (24 * 60 * 60 * 1000));
+      return dagIndex % alleWeetjes.length;
+    }
+
+    // Render weetjes
+    function renderWeetjes() {
+      const grid = document.getElementById('weetjesGrid');
+      const groep = alleWeetjes[getDayGroup()];
+      grid.innerHTML = groep.map((tekst, i) => `
+        <div class="weetje-card">
+          <div class="weetje-num">Weetje #${i + 1}</div>
+          <p>${tekst}</p>
+        </div>
+      `).join('');
+    }
+    renderWeetjes();
+
+    // ── COUNTDOWN naar volgende 24-uur wissel ──
+    function updateCountdown() {
+      const now = Date.now();
+      const nextReset = (Math.floor(now / (24 * 60 * 60 * 1000)) + 1) * 24 * 60 * 60 * 1000;
+      let diff = Math.max(0, Math.floor((nextReset - now) / 1000));
+      const h = Math.floor(diff / 3600); diff %= 3600;
+      const m = Math.floor(diff / 60);
+      const s = diff % 60;
+      document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+      document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+      document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ── VIDEOS ──
+    const videos = [
+      { id: 'iwhrzf1rIqw', title: 'Onze lieve bunny 🐰', desc: 'Zo schattig! 💛' },
+      { id: '8k9fmMr8rqU', title: 'Konijntje in actie 🩷', desc: 'Te lief voor woorden' },
+      { id: 'VjqBt9lbOT0', title: 'Schattig konijnenmoment 🥕', desc: 'Pure konijnenliefde' },
+      { id: 'urANZiTyBD4', title: 'Onze favoriete bunny 🌸', desc: 'Liz & Charli approved ✨' }
+    ];
+
+    const vGrid = document.getElementById('videosGrid');
+    vGrid.innerHTML = videos.map(v => `
+      <div class="video-card">
+        <iframe
+          src="https://www.youtube.com/embed/${v.id}"
+          title="${v.title}"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+        <div class="video-info">
+          <h3>${v.title}</h3>
+          <p>${v.desc}</p>
+        </div>
+      </div>
+    `).join('');
+  </script>
+</body>
+</html>
