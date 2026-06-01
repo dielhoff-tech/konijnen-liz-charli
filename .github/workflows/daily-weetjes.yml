@@ -1,0 +1,32 @@
+name: Dagelijkse konijnenweetjes
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # 08:00 Nederlandse tijd (UTC+2 zomer)
+  workflow_dispatch:       # ook handmatig te starten via GitHub UI
+
+jobs:
+  update-weetjes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Genereer weetjes en update index.html
+        run: python .github/scripts/update_weetjes.py
+
+      - name: Commit en push
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || git commit -m "🐰 Dagelijkse weetjes $(date +'%Y-%m-%d')"
+          git push
