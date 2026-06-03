@@ -3,10 +3,12 @@ name: Dagelijkse weetjes – 07:30 Amsterdam
 on:
   schedule:
     - cron: "30 5 * * *"   # 05:30 UTC = 07:30 Amsterdam (CEST)
-  workflow_dispatch:        # ook handmatig te starten
+  workflow_dispatch:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   update:
@@ -23,12 +25,13 @@ jobs:
       - name: Genereer weetjes.json
         run: python update_weetjes.py
 
-      - name: Commit en push
+      - name: Commit en push naar GitHub Pages
         run: |
           git config user.name  "Konijnen Bot"
           git config user.email "konijnen-bot@users.noreply.github.com"
           git add weetjes.json
           git diff --cached --quiet && echo "Geen wijzigingen" && exit 0
           git commit -m "🐰 Weetjes $(date +%Y-%m-%d)"
+          git pull --rebase
           git push
 
