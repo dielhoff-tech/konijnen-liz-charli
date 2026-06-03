@@ -1,18 +1,20 @@
-name: Dagelijkse deploy – 08:00 Amsterdam
+name: Dagelijkse deploy – 07:30 Amsterdam
 
 on:
   schedule:
-    # 06:00 UTC = 08:00 Amsterdam (zomertijd CEST)
-    - cron: '0 6 * * *'
-  workflow_dispatch: # ook handmatig te starten
+    # 05:30 UTC = 07:30 Amsterdam (zomertijd CEST)
+    - cron: "30 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Schrijf update-timestamp
         run: |
